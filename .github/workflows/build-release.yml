@@ -17,6 +17,8 @@ jobs:
       matrix:
         model:
           - x86_64
+          - nanopi-r4s
+          - nanopi-r5s
         tag:
           - type: rc2
             version: openwrt-23.05
