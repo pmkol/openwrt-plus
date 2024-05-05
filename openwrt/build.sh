@@ -180,17 +180,6 @@ git clone https://$github/openwrt/routing master/routing --depth=1
 # openwrt-23.05
 [ "$1" = "rc2" ] && git clone https://$github/openwrt/openwrt -b openwrt-23.05 master/openwrt-23.05 --depth=1
 
-# openclash master
-git clone -b dev https://github.com/vernesong/OpenClash master/OpenClash --depth=1
-if [ -d "master/OpenClash" ]; then
-    sed -i 's/("OpenClash"), 50/("OpenClash"), 20/' master/OpenClash/luci-app-openclash/luasrc/controller/openclash.lua
-    mkdir -p openwrt/package/feeds/luci
-    cp -r master/OpenClash/luci-app-openclash openwrt/package/feeds/luci/luci-app-openclash
-else
-    echo -e "Failed to download openclash"
-    exit 1
-fi
-
 # immortalwrt master
 git clone https://$github/immortalwrt/packages master/immortalwrt_packages --depth=1
 [ "$(whoami)" = "runner" ] && endgroup
