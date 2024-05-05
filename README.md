@@ -1,4 +1,4 @@
-# OpenWrt Plus 23.05 with Kernel 6.6 LTS
+# OpenWrt Plus 23.05
 
 ### 编译脚本存档来自：https://init2.cooluc.com 
 
