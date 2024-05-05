@@ -48,6 +48,17 @@ curl -s https://$mirror/openwrt/patch/luci/applications/002-luci-app-frpc-add-en
 rm -rf feeds/packages/net/haproxy
 cp -a ../master/packages/net/haproxy feeds/packages/net/haproxy
 
+# openclash
+git clone -b dev https://github.com/vernesong/OpenClash master/OpenClash --depth=1
+if [ -d "master/OpenClash" ]; then
+    sed -i 's/("OpenClash"), 50/("OpenClash"), 20/' master/OpenClash/luci-app-openclash/luasrc/controller/openclash.lua
+    mkdir -p openwrt/package/feeds/luci
+    cp -r master/OpenClash/luci-app-openclash openwrt/package/feeds/luci/luci-app-openclash
+else
+    echo -e "Failed to download openclash"
+    exit 1
+fi
+
 # samba4 - bump version
 rm -rf feeds/packages/net/samba4
 git clone https://$github/sbwml/feeds_packages_net_samba4 feeds/packages/net/samba4
