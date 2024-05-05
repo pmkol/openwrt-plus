@@ -103,10 +103,8 @@ sed -i "s/ImmortalWrt/OpenWrt/g" package/new/homeproxy/po/zh_Hans/homeproxy.po
 sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" package/new/homeproxy/htdocs/luci-static/resources/view/homeproxy/{client.js,server.js}
 
 # openclash
-git clone -b dev https://github.com/vernesong/OpenClash master/OpenClash --depth=1
-sed -i 's/("OpenClash"), 50/("OpenClash"), 20/' master/OpenClash/luci-app-openclash/luasrc/controller/openclash.lua
-mkdir -p openwrt/package/feeds/luci
-cp -r master/OpenClash/luci-app-openclash openwrt/package/feeds/luci/luci-app-openclash
+git clone -b dev https://github.com/vernesong/OpenClash package/feeds/luci/luci-app-openclash --depth=1
+sed -i 's/("OpenClash"), 50/("OpenClash"), 20/' package/feeds/luci/luci-app-openclash/luasrc/controller/openclash.lua
 
 # alist
 git clone https://$github/sbwml/openwrt-alist package/new/alist
