@@ -6,7 +6,7 @@ https://github.com/pmkol/openwrt_build_script/releases
 
 ---------------
 
-### 固件编译脚本存档来自：https://init2.cooluc.com 
+#### 固件编译脚本存档来自：https://init2.cooluc.com 
 
 - 优化系统内核（全锥型NAT、BBRv3、LLVM-BPF、Shortcut-FE）
 - 使用 OpenWrt+ImmortalWrt 软件源，以提供更多的插件支持
