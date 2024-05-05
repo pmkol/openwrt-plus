@@ -1,12 +1,18 @@
 # OpenWrt Plus 23.05
 
-### 编译脚本存档来自：https://init2.cooluc.com 
+### 固件编译脚本存档来自：https://init2.cooluc.com 
 
-本项目对原存档进行精简，优化系统内核，最小化集成常用插件并修复多处上游插件BUG
+- 优化系统内核（全锥型NAT、BBRv3、LLVM-BPF、Shortcut-FE）
+- 使用 OpenWrt+ImmortalWrt 软件源，以提供更多的插件支持
+- 最小化集成常用插件，修复多处上游插件BUG
+
+| ⚓ 服务 | 🗳️ Docker | 🔗 网络存储 | 🩺 网络 |
+| :---- |  :----  |  :----  |  :----  |
+| PassWall</br>OpenClash</br>MosDNS</br>动态DNS</br>硬盘休眠</br>Watchcat</br>Aira2</br>FRP客户端</br>NATMap</br>网络共享</br>网络唤醒</br>ZeroTier | Dockerman</br>Docker</br>Dockerd</br>Docker-compose</br></br></br></br></br></br></br></br></br> | Alist文件列表</br>USB打印服务器</br>GoWebDav</br></br></br></br></br></br></br></br></br></br> | 网速测试</br>SQM队列管理</br>UPnP</br>带宽监控</br>Socat</br>访问控制</br>IP限速</br></br></br></br></br></br> |
 
 ---------------
 
-### 基于 Linux 6.6 LTS (NanoPi R4S/R5S/R5C & X86_64) 固件下载:
+### NanoPi R4S/R5S/R5C & X86_64 固件下载:
 
 https://github.com/pmkol/openwrt_build_script/releases
 
