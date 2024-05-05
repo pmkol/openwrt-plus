@@ -6,13 +6,13 @@
 
 ---------------
 
-## 基于 Linux 6.6 LTS (NanoPi R4S/R5S/R5C & X86_64) 固件下载:
+### 基于 Linux 6.6 LTS (NanoPi R4S/R5S/R5C & X86_64) 固件下载:
 
 https://github.com/pmkol/openwrt_build_script/releases
 
 ---------------
 
-## 本地编译环境安装（根据 debian 11 / ubuntu 22）
+### 本地编译环境安装（根据 debian 11 / ubuntu 22）
 ```shell
 sudo apt-get update
 sudo apt-get install -y build-essential flex bison g++ gawk gcc-multilib g++-multilib gettext git libfuse-dev libncurses5-dev libssl-dev python3 python3-pip python3-ply python3-distutils python3-pyelftools rsync unzip zlib1g-dev file wget subversion patch upx-ucl autoconf automake curl asciidoc binutils bzip2 lib32gcc-s1 libc6-dev-i386 uglifyjs msmtp texinfo libreadline-dev libglib2.0-dev xmlto libelf-dev libtool autopoint antlr3 gperf ccache swig coreutils haveged scons libpython3-dev jq
