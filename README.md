@@ -1,4 +1,4 @@
-# OpenWrt X86_64 构建脚本
+# OpenWrt Plus
 
 ### 编译脚本存档来自：https://init2.cooluc.com 
 
@@ -6,11 +6,9 @@
 
 ---------------
 
-## 基于 Linux 6.6 LTS 固件下载:
+## 基于 Linux 6.6 LTS (NanoPi R4S/R5S/R5C & X86_64) 固件下载:
 
-#### X86_64: https://github.com/pmkol/openwrt_build_script/releases
-
-#### 构建来源: https://github.com/pmkol/openwrt_build_script
+https://github.com/pmkol/openwrt_build_script/releases
 
 ---------------
 
