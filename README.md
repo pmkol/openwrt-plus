@@ -16,6 +16,8 @@ https://github.com/pmkol/openwrt_build_script/releases
 | :---- |  :----  |  :----  |  :----  |
 | PassWall</br>OpenClash</br>MosDNS</br>动态DNS</br>硬盘休眠</br>Watchcat</br>Aira2</br>FRP客户端</br>NATMap</br>网络共享</br>网络唤醒</br>ZeroTier | Dockerman</br>Docker</br>Dockerd</br>Docker-compose</br></br></br></br></br></br></br></br></br> | Alist文件列表</br>USB打印服务器</br>GoWebDav</br></br></br></br></br></br></br></br></br></br> | 网速测试</br>SQM队列管理</br>UPnP</br>带宽监控</br>Socat</br>访问控制</br>IP限速</br></br></br></br></br></br> |
 
+自定义预装插件需fork本项目，修改 openwrt/23-config-common 的插件选项重新编译
+
 ---------------
 
 ### 本地编译环境安装（根据 debian 11 / ubuntu 22）
