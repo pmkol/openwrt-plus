@@ -1,9 +1,6 @@
 # use geoip
 sed -i 's/geoip-only-cn-private.dat/geoip.dat/g' package/new/helloworld/v2ray-geodata/Makefile
 
-# disable docker option iptables
-sed -i "s/iptables '1'/iptables '0'/g" feeds/packages/utils/dockerd/files/etc/config/dockerd
-
 # remove ssr_plus
 rm -rf package/new/helloworld/luci-app-ssr-plus
 rm -rf package/new/helloworld/patch-luci-app-ssr-plus.patch
