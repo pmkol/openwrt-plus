@@ -1,18 +1,42 @@
-# NanoPi R4S/R5S/R5C & X86_64 OpenWrt 简易构建脚本存档
+# OpenWrt Plus 23.05
 
-### 存档来自：https://init2.cooluc.com
+### NanoPi R4S/R5S/R5C & X86_64 固件下载:
+
+https://github.com/pmkol/openwrt-plus/releases
+
+```
+【首次登陆】
+地址：10.0.0.1（默认）
+用户：root
+密码：空
+
+【分区挂载】
+系统/磁盘管理 将系统盘剩余空间创建新分区
+系统/挂载点   启用新分区并挂载至/opt目录
+```
 
 ---------------
 
-## 基于 Linux 6.6 LTS 固件下载:
+#### 固件编译脚本存档来自：https://init2.cooluc.com 
 
-#### NanoPi R4S: https://r4s.cooluc.com
+- 优化系统内核 [ √ Full cone NAT, √ BBRv3, √ LLVM-BPF, √ Shortcut-FE ]
+- 使用 OpenWrt+ImmortalWrt 软件源，支持更多插件的在线安装与升级
+- 最小化集成常用插件，修复多处上游插件BUG
 
-#### NanoPi R5S/R5C: https://r5s.cooluc.com
+| ⚓ 服务 | 🗳️ Docker | 🔗 网络存储  | 🩺 网络  |
+|  :----  |  :----  |  :----  |  :----  |
+| PassWall | Dockerman | Alist文件列表 | 网速测试 |
+| OpenClash | Docker | USB打印服务器 | SQM队列管理 |
+| MosDNS | Dockerd | GoWebDav | UPnP |
+| 硬盘休眠 | Docker-compose | | 带宽监控 |
+| Watchcat | | | Socat |
+| Aira2 | | | 访问控制 |
+| FRP客户端 | | | IP限速 |
+| 网络共享 | | | |
+| 网络唤醒 | | | |
+| ZeroTier | | | |
 
-#### X86_64: https://x86.cooluc.com
-
-#### 构建来源: https://github.com/sbwml/builder
+自定义预装插件建议fork上游原项目，以免因本项目未及时同步导致编译失败
 
 ---------------
 
