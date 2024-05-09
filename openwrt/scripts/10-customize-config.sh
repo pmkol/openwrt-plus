@@ -11,17 +11,7 @@ sed -i 's/openwrt\/luci/pmkol\/openwrt-plus/g' package/new/luci-theme-argon/luci
 sed -i 's/openwrt\/luci/pmkol\/openwrt-plus/g' feeds/luci/themes/luci-theme-bootstrap/ucode/template/themes/bootstrap/footer.ut
 sed -i 's/openwrt\/luci/pmkol\/openwrt-plus/g' feeds/luci/themes/luci-theme-material/ucode/template/themes/material/footer.ut
 sed -i 's/openwrt\/luci/pmkol\/openwrt-plus/g' feeds/luci/themes/luci-theme-openwrt-2020/ucode/template/themes/openwrt2020/footer.ut
-case $(uname -m) in
-    x86_64)
-        sed -i '/# opkg mirror/a echo -e '\''src/gz immortalwrt_luci https://mirrors.pku.edu.cn/immortalwrt/releases/packages-23.05/x86_64/luci\\nsrc/gz immortalwrt_packages https://mirrors.pku.edu.cn/immortalwrt/releases/packages-23.05/x86_64/packages'\'' >> /etc/opkg/distfeeds.conf' package/new/default-settings/default/zzz-default-settings
-        ;;
-    aarch64)
-        sed -i '/# opkg mirror/a echo -e '\''src/gz immortalwrt_luci https://mirrors.pku.edu.cn/immortalwrt/releases/packages-23.05/aarch64_generic/luci\\nsrc/gz immortalwrt_packages https://mirrors.pku.edu.cn/immortalwrt/releases/packages-23.05/aarch64_generic/packages'\'' >> /etc/opkg/distfeeds.conf' package/new/default-settings/default/zzz-default-settings
-        ;;
-    *)
-        echo "Warning: This system architecture is not supported."
-        ;;
-esac
+sed -i '/# opkg mirror/a case $(uname -m) in\n    x86_64)\n        echo -e '\''src/gz immortalwrt_luci https://mirrors.pku.edu.cn/immortalwrt/releases/packages-23.05/x86_64/luci\nsrc/gz immortalwrt_packages https://mirrors.pku.edu.cn/immortalwrt/releases/packages-23.05/x86_64/packages'\'' >> /etc/opkg/distfeeds.conf\n        ;;\n    aarch64)\n        echo -e '\''src/gz immortalwrt_luci https://mirrors.pku.edu.cn/immortalwrt/releases/packages-23.05/aarch64_generic/luci\nsrc/gz immortalwrt_packages https://mirrors.pku.edu.cn/immortalwrt/releases/packages-23.05/aarch64_generic/packages'\'' >> /etc/opkg/distfeeds.conf\n        ;;\n    *)\n        echo "Warning: This system architecture is not supported."\n        ;;\nesac' package/new/default-settings/default/zzz-default-settings
 sed -i '/# opkg mirror/a echo -e '\''untrusted comment: Public usign key for 23.05 release builds\\nRWRoKXAGS4epF5gGGh7tVQxiJIuZWQ0geStqgCkwRyviQCWXpufBggaP'\'' > /etc/opkg/keys/682970064b87a917' package/new/default-settings/default/zzz-default-settings
 sed -i 's#raw.cooluc.com/sbwml/kmod#gh-proxy.com/https://raw.githubusercontent.com/sbwml/kmod#g' package/new/default-settings/default/zzz-default-settings
 # comment out the following line to restore the full description
