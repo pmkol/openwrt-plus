@@ -1,0 +1,13 @@
+diff --git a/openwrt/23-config-musl-armsr-armv8 b/openwrt/23-config-musl-armsr-armv8
+index 663c30b..559e572 100644
+--- a/openwrt/23-config-musl-armsr-armv8
++++ b/openwrt/23-config-musl-armsr-armv8
+@@ -19,7 +19,7 @@ CONFIG_COREMARK_NUMBER_OF_THREADS=16
+ # CONFIG_KERNEL_KALLSYMS is not set
+ 
+ ### Utilities
+-CONFIG_PACKAGE_qemu-ga=y
++# CONFIG_PACKAGE_qemu-ga is not set
+ 
+ ### RTL8723D / RTL8821C / RTW89 firmware
+ CONFIG_PACKAGE_rtl8723de-firmware=m

@@ -1,0 +1,7 @@
+diff --git a/openwrt/scripts/11-fix-vendor.sh b/openwrt/scripts/11-fix-vendor.sh
+new file mode 100644
+index 0000000..d4e6424
+--- /dev/null
++++ b/openwrt/scripts/11-fix-vendor.sh
+@@ -0,0 +1 @@
++sed -i '/# timezone/i grep -q '\''/tmp/sysinfo/model'\'' /etc/rc.local || sudo sed -i '\''/exit 0/i [ "$(cat /sys\\/class\\/dmi\\/id\\/sys_vendor 2>\\/dev\\/null)" = "Default string" ] \&\& echo "Industrial Router" > \\/tmp\\/sysinfo\\/model'\'' /etc/rc.local\n' package/new/default-settings/default/zzz-default-settings
