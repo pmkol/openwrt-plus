@@ -19,7 +19,12 @@ https://github.com/pmkol/openwrt-plus/releases
 
 #### 固件编译脚本存档来自：https://init2.cooluc.com
 
-- 优化系统内核 [ √ Full cone NAT, √ BBRv3, √ LLVM-BPF, √ Shortcut-FE ]
+- 优化系统内核
+  - [x] Full cone NAT
+  - [x] TCP BBRv3
+  - [x] TCP Brutal
+  - [x] LLVM-BPF
+  - [x] Shortcut-FE
 - 使用 OpenWrt+ImmortalWrt 软件源，支持更多插件的在线安装与升级
 - 最小化集成常用插件，修复多处上游插件BUG
 
