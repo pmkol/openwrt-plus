@@ -4,9 +4,6 @@ index 0000000..0649342
 --- /dev/null
 +++ b/openwrt/scripts/10-customize-config.sh
 @@ -0,0 +1,19 @@
-+# update geoip
-+sed -i 's/geoip-only-cn-private.dat/geoip.dat/g' package/new/helloworld/v2ray-geodata/Makefile
-+
 +# remove ssrplus
 +rm -rf package/new/helloworld/luci-app-ssr-plus
 +rm -rf package/new/helloworld/patch-luci-app-ssr-plus.patch
