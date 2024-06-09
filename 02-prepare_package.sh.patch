@@ -1,8 +1,8 @@
 diff --git a/openwrt/scripts/02-prepare_package.sh b/openwrt/scripts/02-prepare_package.sh
-index 50a479a..5debfaa 100644
+index bff2eb4..e5e98f7 100644
 --- a/openwrt/scripts/02-prepare_package.sh
 +++ b/openwrt/scripts/02-prepare_package.sh
-@@ -102,6 +102,12 @@ git clone https://$github/immortalwrt/homeproxy package/new/homeproxy
+@@ -98,6 +98,12 @@ git clone https://$github/immortalwrt/homeproxy package/new/homeproxy
  sed -i "s/ImmortalWrt/OpenWrt/g" package/new/homeproxy/po/zh_Hans/homeproxy.po
  sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" package/new/homeproxy/htdocs/luci-static/resources/view/homeproxy/{client.js,server.js}
  

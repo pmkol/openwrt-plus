@@ -1,5 +1,5 @@
 diff --git a/openwrt/build.sh b/openwrt/build.sh
-index f2732bd..11a8d7b 100644
+index 8c2d1e7..5e0dd67 100644
 --- a/openwrt/build.sh
 +++ b/openwrt/build.sh
 @@ -256,6 +256,8 @@ curl -sO https://$mirror/openwrt/scripts/02-prepare_package.sh

@@ -1,8 +1,8 @@
 diff --git a/.github/workflows/build-release.yml b/.github/workflows/build-release.yml
-index 94f7fb2..4ddba87 100644
+index 0559e8b..4287a3d 100644
 --- a/.github/workflows/build-release.yml
 +++ b/.github/workflows/build-release.yml
-@@ -86,10 +86,12 @@ jobs:
+@@ -114,10 +114,12 @@ jobs:
        run: |
          export PATH="/opt/clang/bin:$PATH"
          export GITHUB_REPO=${{ github.repository }}
@@ -17,7 +17,7 @@ index 94f7fb2..4ddba87 100644
  
      - name: Extensive logs after a failed compilation
        working-directory: /builder
-@@ -116,17 +118,12 @@ jobs:
+@@ -144,17 +146,12 @@ jobs:
          elif [ "${{ matrix.model }}" = "x86_64" ]; then
            cp -a openwrt/bin/targets/x86/*/*-ext4-combined-efi.img.gz rom/
            cp -a openwrt/bin/targets/x86/*/*-squashfs-combined-efi.img.gz rom/
@@ -35,7 +35,7 @@ index 94f7fb2..4ddba87 100644
            cp -a openwrt/bin/targets/armsr/armv8*/*.manifest info/manifest.txt
            cp -a openwrt/bin/targets/armsr/armv8*/config.buildinfo info/config.buildinfo
            cd rom && sha256sum * > ../info/sha256sums.txt
-@@ -136,15 +133,16 @@ jobs:
+@@ -164,15 +161,16 @@ jobs:
        uses: actions/upload-artifact@v4
        with:
          name: ${{ matrix.model }}-${{ matrix.tag.version }}

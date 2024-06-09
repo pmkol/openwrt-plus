@@ -1,9 +1,9 @@
 diff --git a/openwrt/scripts/10-customize-config.sh b/openwrt/scripts/10-customize-config.sh
 new file mode 100644
-index 0000000..0649342
+index 0000000..cb6e797
 --- /dev/null
 +++ b/openwrt/scripts/10-customize-config.sh
-@@ -0,0 +1,19 @@
+@@ -0,0 +1,17 @@
 +# remove ssrplus
 +rm -rf package/new/helloworld/luci-app-ssr-plus
 +rm -rf package/new/helloworld/patch-luci-app-ssr-plus.patch

@@ -1,8 +1,8 @@
 diff --git a/README.md b/README.md
-index 44507b5..9345392 100644
+index 44507b5..03c9ef5 100644
 --- a/README.md
 +++ b/README.md
-@@ -1,18 +1,42 @@
+@@ -1,18 +1,47 @@
 -# NanoPi R4S/R5S/R5C & X86_64 OpenWrt 简易构建脚本存档
 +# OpenWrt Plus 23.05
  

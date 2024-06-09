@@ -1,5 +1,5 @@
 diff --git a/openwrt/23-config-common b/openwrt/23-config-common
-index e8c5270..2e1df0e 100644
+index 1b4f0e9..9880eb0 100644
 --- a/openwrt/23-config-common
 +++ b/openwrt/23-config-common
 @@ -57,6 +57,7 @@ CONFIG_DOCKER_STO_BTRFS=y
@@ -37,7 +37,7 @@ index e8c5270..2e1df0e 100644
  CONFIG_PACKAGE_luci-app-alist=y
  CONFIG_PACKAGE_luci-app-argon-config=y
  CONFIG_PACKAGE_luci-app-aria2=y
-@@ -86,82 +87,77 @@ CONFIG_PACKAGE_luci-app-autoreboot=y
+@@ -86,81 +87,77 @@ CONFIG_PACKAGE_luci-app-autoreboot=y
  CONFIG_PACKAGE_luci-app-commands=y
  CONFIG_PACKAGE_luci-app-cpufreq=y
  # CONFIG_PACKAGE_luci-app-daed is not set
@@ -55,7 +55,7 @@ index e8c5270..2e1df0e 100644
  CONFIG_PACKAGE_luci-app-mosdns=y
 -CONFIG_PACKAGE_luci-app-natmap=y
 +# CONFIG_PACKAGE_luci-app-natmap is not set
- CONFIG_PACKAGE_luci-app-netdata=y
++# CONFIG_PACKAGE_luci-app-netdata is not set
  CONFIG_PACKAGE_luci-app-netspeedtest=y
  CONFIG_PACKAGE_luci-app-nlbwmon=y
 -CONFIG_PACKAGE_luci-app-oaf=y
@@ -152,7 +152,7 @@ index e8c5270..2e1df0e 100644
  
  ### OpenSSL
  CONFIG_OPENSSL_ENGINE=y
-@@ -210,6 +206,7 @@ CONFIG_PACKAGE_kmod-tcp-bbr3=y
+@@ -210,6 +207,7 @@ CONFIG_PACKAGE_kmod-tcp-brutal=y
  CONFIG_PACKAGE_kmod-tls=y
  CONFIG_PACKAGE_kmod-tun=y
  CONFIG_PACKAGE_kmod-usb-audio=y
@@ -160,7 +160,7 @@ index e8c5270..2e1df0e 100644
  CONFIG_PACKAGE_kmod-usb2-pci=y
  CONFIG_PACKAGE_kmod-usb2=y
  CONFIG_PACKAGE_kmod-usb3=y
-@@ -222,6 +219,7 @@ CONFIG_PACKAGE_kmod-mt7921u=y
+@@ -222,6 +220,7 @@ CONFIG_PACKAGE_kmod-mt7921u=y
  
  ### Utilities
  CONFIG_PACKAGE_bash=y
@@ -168,7 +168,7 @@ index e8c5270..2e1df0e 100644
  CONFIG_PACKAGE_dmesg=y
  CONFIG_PACKAGE_dosfstools=y
  CONFIG_PACKAGE_exfat-fsck=y
-@@ -285,7 +283,6 @@ CONFIG_PACKAGE_shadow-useradd=y
+@@ -285,7 +284,6 @@ CONFIG_PACKAGE_shadow-useradd=y
  CONFIG_PACKAGE_shadow-userdel=y
  CONFIG_PACKAGE_shadow-usermod=y
  CONFIG_PACKAGE_shadow-utils=y
