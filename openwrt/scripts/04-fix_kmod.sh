@@ -82,7 +82,7 @@ fi
 # clang
 if [ "$KERNEL_CLANG_LTO" = "y" ]; then
     # xtables-addons module
-    rm -rf feeds/packages/net/xtables-addons
+    rm -rf feeds/packages/net/xtables-addons/*
     git clone https://$github/sbwml/kmod_packages_net_xtables-addons feeds/packages/net/xtables-addons
     # netatop
     sed -i 's/$(MAKE)/$(KERNEL_MAKE)/g' feeds/packages/admin/netatop/Makefile

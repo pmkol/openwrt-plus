@@ -29,26 +29,18 @@ ip_info=`curl -s https://ip.cooluc.com`;
 export isCN=`echo $ip_info | grep -Po 'country_code\":"\K[^"]+'`;
 
 # script url
-if [ "$isCN" = "CN" ]; then
-    export mirror=init.cooluc.com
-else
-    export mirror=init2.cooluc.com
-fi
+export mirror=raw.githubusercontent.com/pmkol/openwrt-plus/x86_64
 
 # github actions - automatically retrieve `github raw` links
 if [ "$(whoami)" = "runner" ] && [ -n "$GITHUB_REPO" ]; then
-    export mirror=raw.githubusercontent.com/$GITHUB_REPO/master
+    export mirror=raw.githubusercontent.com/$GITHUB_REPO/x86_64
 fi
 
 # private gitea
 export gitea=git.cooluc.com
 
 # github mirror
-if [ "$isCN" = "CN" ]; then
-    export github="github.com"
-else
-    export github="github.com"
-fi
+export github=github.com
 
 # Check root
 if [ "$(id -u)" = "0" ]; then
@@ -256,6 +248,8 @@ curl -sO https://$mirror/openwrt/scripts/02-prepare_package.sh
 curl -sO https://$mirror/openwrt/scripts/03-convert_translation.sh
 curl -sO https://$mirror/openwrt/scripts/04-fix_kmod.sh
 curl -sO https://$mirror/openwrt/scripts/05-fix-source.sh
+curl -sO https://$mirror/openwrt/scripts/10-customize-config.sh
+curl -sO https://$mirror/openwrt/scripts/11-fix-vendor.sh
 curl -sO https://$mirror/openwrt/scripts/99_clean_build_cache.sh
 chmod 0755 *sh
 [ "$(whoami)" = "runner" ] && group "patching openwrt"
@@ -263,6 +257,8 @@ bash 00-prepare_base.sh
 bash 02-prepare_package.sh
 bash 03-convert_translation.sh
 bash 05-fix-source.sh
+bash 10-customize-config.sh
+bash 11-fix-vendor.sh
 if [ "$platform" = "rk3568" ] || [ "$platform" = "rk3399" ] || [ "$platform" = "x86_64" ] || [ "$platform" = "bcm53xx" ] || [ "$platform" = "armv8" ]; then
     bash 01-prepare_base-mainline.sh
     bash 04-fix_kmod.sh
