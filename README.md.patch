@@ -1,5 +1,5 @@
 diff --git a/README.md b/README.md
-index 44507b5..03c9ef5 100644
+index 1292eea..683e7f5 100644
 --- a/README.md
 +++ b/README.md
 @@ -1,18 +1,47 @@
@@ -45,7 +45,7 @@ index 44507b5..03c9ef5 100644
 +| ⚓ 服务 | 🗳️ Docker | 🔗 网络存储  | 🩺 网络  |
 +|  :----  |  :----  |  :----  |  :----  |
 +| PassWall | Dockerman | Alist文件列表 | 网速测试 |
-+| OpenClash | Docker | USB打印服务器 | SQM队列管理 |
++| Mihomo | Docker | USB打印服务器 | SQM队列管理 |
 +| MosDNS | Dockerd | GoWebDav | UPnP |
 +| 硬盘休眠 | Docker-compose | | 带宽监控 |
 +| Watchcat | | | Socat |

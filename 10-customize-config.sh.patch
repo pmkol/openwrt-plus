@@ -1,12 +1,27 @@
 diff --git a/openwrt/scripts/10-customize-config.sh b/openwrt/scripts/10-customize-config.sh
 new file mode 100644
-index 0000000..cb6e797
+index 0000000..a4cd068
 --- /dev/null
 +++ b/openwrt/scripts/10-customize-config.sh
-@@ -0,0 +1,16 @@
+@@ -0,0 +1,31 @@
 +# remove ssrplus
 +rm -rf package/new/helloworld/luci-app-ssr-plus
 +rm -rf package/new/helloworld/patch-luci-app-ssr-plus.patch
++
++# add mihomo
++git clone https://$github/pmkol/openwrt-mihomo package/new/openwrt-mihomo
++mkdir -p package/new/openwrt-mihomo/luci-app-mihomo/root/etc/mihomo/run/ui
++curl -Lso package/new/openwrt-mihomo/luci-app-mihomo/root/etc/mihomo/run/Country.mmdb https://$github/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb
++curl -Lso metacubexd-gh-pages.tar.gz https://$github/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.tar.gz
++tar zxf metacubexd-gh-pages.tar.gz
++mv metacubexd-gh-pages package/new/openwrt-mihomo/luci-app-mihomo/root/etc/mihomo/run/ui/metacubexd
++
++# change geodata
++rm -rf package/new/helloworld/v2ray-geodata
++git clone https://$github/sbwml/v2ray-geodata package/new/helloworld/v2ray-geodata
++sed -i 's#Loyalsoldier/geoip/releases/latest/download/geoip-only-cn-private.dat#MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat#g; s#Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat#MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat#g' package/new/helloworld/v2ray-geodata/Makefile
++sed -i '/geoip_api/s#Loyalsoldier/v2ray-rules-dat#pmkol/geodata-lite#' package/new/helloworld/luci-app-passwall/root/usr/share/passwall/rule_update.lua
++sed -i '/geosite_api/s#Loyalsoldier/v2ray-rules-dat#MetaCubeX/meta-rules-dat#' package/new/helloworld/luci-app-passwall/root/usr/share/passwall/rule_update.lua
 +
 +# configure default-settings
 +sed -i 's/openwrt\/luci/pmkol\/openwrt-plus/g' package/new/luci-theme-argon/luci-theme-argon/luasrc/view/themes/argon/footer.htm
