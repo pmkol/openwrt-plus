@@ -35,7 +35,12 @@ grep HASH include/kernel-6.6 | awk -F'HASH-' '{print $2}' | awk '{print $1}' | m
 
 # kernel generic patches
 rm -rf target/linux/generic
-git clone https://$github/sbwml/target_linux_generic -b main target/linux/generic
+release_kernel_version=$(curl -s https://raw.githubusercontent.com/sbwml/r4s_build_script/master/tags/kernel-6.6 | awk -F'HASH-' '{print $2}' | awk '{print $1}')
+if [ "$kernel_version" = "$release_kernel_version" ]; then
+    git clone https://$github/sbwml/target_linux_generic -b main target/linux/generic --depth=1
+else
+    git clone https://nanopi:nanopi@$gitea/sbwml/target_linux_generic -b main target/linux/generic --depth=1
+fi
 
 # bcm53xx - fix build kernel with clang
 [ "$platform" = "bcm53xx" ] && [ "$KERNEL_CLANG_LTO" = "y" ] && rm -f target/linux/generic/hack-6.6/220-arm-gc_sections.patch
@@ -54,7 +59,7 @@ if [ "$KERNEL_CLANG_LTO" = "y" ]; then
 fi
 
 # kernel - btf
-[ "$ENABLE_BPF" = "y" ] && echo 'CONFIG_DEBUG_INFO_BTF_MODULES=y' >> target/linux/generic/config-6.6
+[ "$ENABLE_BPF" = "y" ] && echo -e "CONFIG_DEBUG_INFO_BTF_MODULES=y\nCONFIG_PROBE_EVENTS_BTF_ARGS=y" >> target/linux/generic/config-6.6
 
 # kernel modules
 rm -rf package/kernel/linux
@@ -223,4 +228,11 @@ cp -a ../master/openwrt/package/kernel/ubnt-ledbar package/kernel/ubnt-ledbar
 if [ "$platform" = "rk3399" ] || [ "$platform" = "rk3568" ]; then
     curl -s https://$mirror/openwrt/patch/rtc/sysfixtime > package/base-files/files/etc/init.d/sysfixtime
     chmod 755 package/base-files/files/etc/init.d/sysfixtime
+fi
+
+# emmc-install
+if [ "$platform" = "rk3568" ]; then
+    mkdir -p files/sbin
+    curl -so files/sbin/emmc-install https://$mirror/openwrt/files/sbin/emmc-install
+    chmod 755 files/sbin/emmc-install
 fi
