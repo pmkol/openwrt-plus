@@ -2,11 +2,10 @@
 rm -rf package/new/helloworld/luci-app-ssr-plus
 rm -rf package/new/helloworld/patch-luci-app-ssr-plus.patch
 
-# add openclash
-git clone -b dev https://github.com/vernesong/OpenClash package/feeds/luci/openclash --depth=1
-mv package/feeds/luci/openclash/luci-app-openclash package/feeds/luci/luci-app-openclash
-rm -rf package/feeds/luci/openclash
-sed -i 's/("OpenClash"), 50/("OpenClash"), 20/' package/feeds/luci/luci-app-openclash/luasrc/controller/openclash.lua
+# add mihomo
+git clone https://$github/pmkol/openwrt-mihomo package/new/openwrt-mihomo
+mkdir -p package/new/openwrt-mihomo/luci-app-mihomo/root/etc/mihomo/run/ui
+curl -Lso package/new/openwrt-mihomo/luci-app-mihomo/root/etc/mihomo/run/Country.mmdb https://$github/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb
 
 # bump geodata version
 rm -rf package/new/helloworld/v2ray-geodata
