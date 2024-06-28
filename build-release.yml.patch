@@ -1,7 +1,20 @@
 diff --git a/.github/workflows/build-release.yml b/.github/workflows/build-release.yml
-index 71a0801..7d5105c 100644
+index 71a0801..abb8b45 100644
 --- a/.github/workflows/build-release.yml
 +++ b/.github/workflows/build-release.yml
+@@ -101,9 +101,9 @@ jobs:
+       run: |
+         export PATH="/opt/clang/bin:$PATH"
+         mkdir /opt/clang
+-        curl -LO https://github.com/sbwml/redhat-llvm-project/releases/download/18.1.6/clang-18.1.6-x86_64-redhat-linux.tar.xz --progress-bar
+-        sudo tar --strip-components=1 -C /opt/clang -xf clang-18.1.6-x86_64-redhat-linux.tar.xz
+-        rm -rf clang-18.1.6-x86_64-redhat-linux.tar.xz
++        curl -LO https://github.com/sbwml/redhat-llvm-project/releases/download/18.1.8/clang-18.1.8-x86_64-redhat-linux.tar.xz --progress-bar
++        sudo tar --strip-components=1 -C /opt/clang -xf clang-18.1.8-x86_64-redhat-linux.tar.xz
++        rm -rf clang-18.1.8-x86_64-redhat-linux.tar.xz
+         clang --version
+ 
+     - name: Compile OpenWrt
 @@ -113,10 +113,12 @@ jobs:
        run: |
          export PATH="/opt/clang/bin:$PATH"

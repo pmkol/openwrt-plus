@@ -1,5 +1,5 @@
 diff --git a/README.md b/README.md
-index 1292eea..683e7f5 100644
+index 1292eea..693c5b6 100644
 --- a/README.md
 +++ b/README.md
 @@ -1,18 +1,47 @@
@@ -42,18 +42,18 @@ index 1292eea..683e7f5 100644
 +- 使用 OpenWrt+ImmortalWrt 软件源，支持更多插件的在线安装与升级
 +- 最小化集成常用插件，修复多处上游插件BUG
 +
-+| ⚓ 服务 | 🗳️ Docker | 🔗 网络存储  | 🩺 网络  |
-+|  :----  |  :----  |  :----  |  :----  |
-+| PassWall | Dockerman | Alist文件列表 | 网速测试 |
-+| Mihomo | Docker | USB打印服务器 | SQM队列管理 |
-+| MosDNS | Dockerd | GoWebDav | UPnP |
-+| 硬盘休眠 | Docker-compose | | 带宽监控 |
-+| Watchcat | | | Socat |
-+| Aira2 | | | 访问控制 |
-+| FRP客户端 | | | IP限速 |
-+| 网络共享 | | | |
-+| 网络唤醒 | | | |
-+| ZeroTier | | | |
++| ⚓ 服务 | 🗳️ Docker  | 🩺 网络  |
++|  :----  |  :----  |  :----  |
++| PassWall | Dockerman | 网速测试 |
++| Mihomo | Docker | SQM队列管理 |
++| MosDNS | Dockerd | UPnP |
++| 硬盘休眠 | Docker-compose | 带宽监控 |
++| Watchcat | | Socat |
++| Aira2 | | 访问控制 |
++| FRP客户端 | | IP限速 |
++| 网络共享 | | |
++| 网络唤醒 | | |
++| ZeroTier | | |
 +
 +自定义预装插件建议fork上游原项目，以免因本项目未及时同步导致编译失败
  

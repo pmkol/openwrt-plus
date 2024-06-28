@@ -1,6 +1,6 @@
 diff --git a/.github/workflows/build-x86_64.yml b/.github/workflows/build-x86_64.yml
 new file mode 100644
-index 0000000..50a75c8
+index 0000000..4f81538
 --- /dev/null
 +++ b/.github/workflows/build-x86_64.yml
 @@ -0,0 +1,150 @@
@@ -78,9 +78,9 @@ index 0000000..50a75c8
 +      run: |
 +        export PATH="/opt/clang/bin:$PATH"
 +        mkdir /opt/clang
-+        curl -LO https://github.com/sbwml/redhat-llvm-project/releases/download/18.1.6/clang-18.1.6-x86_64-redhat-linux.tar.xz --progress-bar
-+        sudo tar --strip-components=1 -C /opt/clang -xf clang-18.1.6-x86_64-redhat-linux.tar.xz
-+        rm -rf clang-18.1.6-x86_64-redhat-linux.tar.xz
++        curl -LO https://github.com/sbwml/redhat-llvm-project/releases/download/18.1.8/clang-18.1.8-x86_64-redhat-linux.tar.xz --progress-bar
++        sudo tar --strip-components=1 -C /opt/clang -xf clang-18.1.8-x86_64-redhat-linux.tar.xz
++        rm -rf clang-18.1.8-x86_64-redhat-linux.tar.xz
 +        clang --version
 +
 +    - name: Compile OpenWrt
