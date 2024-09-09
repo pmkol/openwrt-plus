@@ -2,7 +2,7 @@
 
 ### X86_64 固件下载:
 
-https://github.com/pmkol/openwrt-plus/releases/tag/v23.05.3
+https://github.com/pmkol/openwrt-plus/releases/tag/v23.05.4
 
 ```
 【首次登陆】
