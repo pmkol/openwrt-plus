@@ -1,18 +1,19 @@
-# NanoPi R4S/R5S/R5C & X86_64 OpenWrt 简易构建脚本存档
+# OpenWrt Plus 23.05
 
-### 存档来自：https://init2.cooluc.com
+### X86_64 固件下载:
 
----------------
+https://github.com/pmkol/openwrt-plus/releases/tag/v23.05.3
 
-## 基于 Linux 6.6 LTS 固件下载:
+```
+【首次登陆】
+地址：10.0.0.1（默认）
+用户：root
+密码：空
 
-#### NanoPi R4S: https://r4s.cooluc.com
-
-#### NanoPi R5S/R5C: https://r5s.cooluc.com
-
-#### X86_64: https://x86.cooluc.com
-
-#### 构建来源: https://github.com/sbwml/builder
+【分区挂载】
+系统/磁盘管理 将系统盘剩余空间创建新分区
+系统/挂载点   启用新分区并挂载至/opt目录
+```
 
 ---------------
 
