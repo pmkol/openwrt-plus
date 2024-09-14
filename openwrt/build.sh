@@ -30,14 +30,14 @@ export isCN=`echo $ip_info | grep -Po 'country_code\":"\K[^"]+'`;
 
 # script url
 if [ "$isCN" = "CN" ]; then
-    export mirror=init.cooluc.com
+    export mirror=raw.githubusercontent.com/pmkol/openwrt-plus/x86_64
 else
-    export mirror=init2.cooluc.com
+    export mirror=raw.githubusercontent.com/pmkol/openwrt-plus/x86_64
 fi
 
 # github actions - automatically retrieve `github raw` links
 if [ "$(whoami)" = "runner" ] && [ -n "$GITHUB_REPO" ]; then
-    export mirror=raw.githubusercontent.com/$GITHUB_REPO/master
+    export mirror=raw.githubusercontent.com/$GITHUB_REPO/x86_64
 fi
 
 # private gitea
@@ -255,6 +255,7 @@ curl -sO https://$mirror/openwrt/scripts/02-prepare_package.sh
 curl -sO https://$mirror/openwrt/scripts/03-convert_translation.sh
 curl -sO https://$mirror/openwrt/scripts/04-fix_kmod.sh
 curl -sO https://$mirror/openwrt/scripts/05-fix-source.sh
+curl -sO https://$mirror/openwrt/scripts/10-customize-config.sh
 curl -sO https://$mirror/openwrt/scripts/99_clean_build_cache.sh
 chmod 0755 *sh
 [ "$(whoami)" = "runner" ] && group "patching openwrt"
@@ -264,6 +265,7 @@ bash 02-prepare_package.sh
 bash 03-convert_translation.sh
 bash 04-fix_kmod.sh
 bash 05-fix-source.sh
+bash 10-customize-config.sh
 [ "$(whoami)" = "runner" ] && endgroup
 
 if [ "$USE_GCC14" = "y" ] || [ "$USE_GCC15" = "y" ]; then
