@@ -80,7 +80,7 @@ CONFIG_LUCI_LANG_zh_Hans=y
 # CONFIG_LUCI_JSMIN is not set
 
 ### APPS
-CONFIG_PACKAGE_luci-app-accesscontrol=y
+# CONFIG_PACKAGE_luci-app-accesscontrol is not set
 # CONFIG_PACKAGE_luci-app-airconnect is not set
 # CONFIG_PACKAGE_luci-app-airplay2 is not set
 CONFIG_PACKAGE_luci-app-alist=y
