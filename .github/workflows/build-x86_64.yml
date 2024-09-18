@@ -83,7 +83,7 @@ jobs:
       run: |
         export PATH="/opt/clang/bin:$PATH"
         export GITHUB_REPO=${{ github.repository }}
-        export KERNEL_CLANG_LTO=y ENABLE_UHTTPD=y ENABLE_LTO=y ENABLE_LRNG=y ENABLE_BPF=y USE_GCC14=y ENABLE_DPDK=y ENABLE_MOLD=y
+        export KERNEL_CLANG_LTO=y ENABLE_UHTTPD=y ENABLE_LTO=y ENABLE_LRNG=y ENABLE_BPF=y USE_GCC14=y ENABLE_MOLD=y
         bash <(curl -sS https://raw.githubusercontent.com/${{ github.repository }}/x86_64/openwrt/build.sh) ${{ matrix.tag.type }} ${{ matrix.model }}
         cd openwrt
         tags=$(git describe --abbrev=0 --tags)
