@@ -71,9 +71,9 @@ jobs:
       run: |
         export PATH="/opt/clang/bin:$PATH"
         mkdir /opt/clang
-        curl -LO https://github.com/pmkol/redhat-llvm-project/releases/download/18.1.8/clang-18.1.8-x86_64-redhat-linux.tar.xz --progress-bar
-        sudo tar --strip-components=1 -C /opt/clang -xf clang-18.1.8-x86_64-redhat-linux.tar.xz
-        rm -rf clang-18.1.8-x86_64-redhat-linux.tar.xz
+        curl -LO https://github.com/pmkol/redhat-llvm-project/releases/download/19.1.0/clang-19.1.0-x86_64-redhat-linux.tar.xz --progress-bar
+        sudo tar --strip-components=1 -C /opt/clang -xf clang-19.1.0-x86_64-redhat-linux.tar.xz
+        rm -rf clang-19.1.0-x86_64-redhat-linux.tar.xz
         clang --version
 
     - name: Compile OpenWrt
