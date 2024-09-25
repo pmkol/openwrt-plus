@@ -43,7 +43,7 @@ sed -i '/# opkg mirror/a echo -e '\''untrusted comment: Public usign key for 23.
 sed -i '/openwrt_extras/d' package/new/default-settings/default/zzz-default-settings
 
 # comment out the following line to use kmod proxy
-sed -i 's#ghp.ci/raw.githubusercontent.com/sbwml/kmod-#raw.githubusercontent.com/sbwml/kmod-#g' package/new/default-settings/default/zzz-default-settings
+sed -i 's#ghp.ci/raw.githubusercontent.com/sbwml#raw.githubusercontent.com/sbwml#g' package/new/default-settings/default/zzz-default-settings
 
 # comment out the following line to restore the full description
 sed -i '/# timezone/i sed -i "s/\\(DISTRIB_DESCRIPTION=\\).*/\\1'\''OpenWrt $(sed -n "s/DISTRIB_DESCRIPTION='\''OpenWrt \\([^ ]*\\) .*/\\1/p" /etc/openwrt_release)'\'',/" /etc/openwrt_release\nsource /etc/openwrt_release \&\& sed -i -e "s/distversion\\s=\\s\\".*\\"/distversion = \\"$DISTRIB_ID $DISTRIB_RELEASE ($DISTRIB_REVISION)\\"/g" -e '\''s/distname    = .*$/distname    = ""/g'\'' /usr/lib/lua/luci/version.lua\nsed -i "s/luciname    = \\".*\\"/luciname    = \\"LuCI openwrt-23.05\\"/g" /usr/lib/lua/luci/version.lua\nsed -i "s/luciversion = \\".*\\"/luciversion = \\"v'$(date +%Y%m%d)'\\"/g" /usr/lib/lua/luci/version.lua\necho "export const revision = '\''v'$(date +%Y%m%d)'\'\'', branch = '\''LuCI openwrt-23.05'\'';" > /usr/share/ucode/luci/version.uc\n/etc/init.d/rpcd restart\n' package/new/default-settings/default/zzz-default-settings
