@@ -4,6 +4,8 @@ rm -rf package/new/helloworld/patch-luci-app-ssr-plus.patch
 
 # add mihomo
 git clone https://$github/pmkol/openwrt-mihomo package/new/openwrt-mihomo
+rm -rf package/new/helloworld/luci-app-mihomo
+rm -rf package/new/helloworld/mihomo
 if curl -s "https://$mirror/openwrt/23-config-common" | grep -q "^CONFIG_PACKAGE_luci-app-mihomo=y"; then
     mkdir -p files/etc/mihomo/run/ui
     curl -Lso files/etc/mihomo/run/geoip.metadb https://$github/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.metadb
