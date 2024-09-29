@@ -303,7 +303,7 @@ else
 fi
 
 # config-firmware
-[ "$NO_KMOD" != "y" ] && [ "$platform" != "rk3399" ] && curl -s https://$mirror/openwrt/generic/config-firmware >> .config
+[ "$NO_KMOD" != "y" ] && [ "$platform" != "rk3399" ] &&  [ "$platform" != "x86_64" ] && curl -s https://$mirror/openwrt/generic/config-firmware >> .config
 
 # ota
 [ "$ENABLE_OTA" = "y" ] && [ "$version" = "rc2" ] && echo 'CONFIG_PACKAGE_luci-app-ota=y' >> .config
