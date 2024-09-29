@@ -163,14 +163,11 @@ else
     git clone https://$github/sbwml/package_kernel_rtl8812au-ac package/kernel/rtl8812au-ac
 fi
 
-# mt76 - 2024-05-17
-rm -rf package/kernel/mt76/patches
+# mt76 - 2024-09-29
+rm -rf package/kernel/mt76
 mkdir -p package/kernel/mt76/patches
 curl -s https://$mirror/openwrt/patch/mt76/Makefile > package/kernel/mt76/Makefile
-[ "$TESTING_KERNEL" = "y" ] && {
-    mkdir -p package/kernel/mt76/patches ; \
-    curl -s https://$mirror/openwrt/patch/mt76/patches/100-fix-build-with-mac80211-6.11-backport.patch > package/kernel/mt76/patches/100-fix-build-with-mac80211-6.11-backport.patch
-}
+curl -s https://$mirror/openwrt/patch/mt76/patches/100-fix-build-with-mac80211-6.11-backport.patch > package/kernel/mt76/patches/100-fix-build-with-mac80211-6.11-backport.patch
 
 # iwinfo: add mt7922 device id
 mkdir -p package/network/utils/iwinfo/patches
@@ -186,19 +183,12 @@ curl -s https://$mirror/openwrt/patch/openwrt-6.x/500-world-regd-5GHz.patch > pa
 
 # mac80211 - fix linux 6.6 & add rtw89
 rm -rf package/kernel/mac80211
-if [ "$TESTING_KERNEL" = "y" ]; then
-    git clone https://$github/sbwml/package_kernel_mac80211 package/kernel/mac80211 -b v6.11
-else
-    git clone https://$github/sbwml/package_kernel_mac80211 package/kernel/mac80211 -b v6.9.9
-fi
+git clone https://$github/sbwml/package_kernel_mac80211 package/kernel/mac80211 -b v6.11
+[ "$TESTING_KERNEL" = "y" ] && rm -f package/kernel/mac80211/patches/build/140-trace_backport.patch
 
 # ath10k-ct
 rm -rf package/kernel/ath10k-ct
-if [ "$TESTING_KERNEL" = "y" ]; then
-    git clone https://$github/sbwml/package_kernel_ath10k-ct package/kernel/ath10k-ct -b v6.11
-else
-    git clone https://$github/sbwml/package_kernel_ath10k-ct package/kernel/ath10k-ct
-fi
+git clone https://$github/sbwml/package_kernel_ath10k-ct package/kernel/ath10k-ct -b v6.11
 
 # kernel patch
 # btf: silence btf module warning messages
