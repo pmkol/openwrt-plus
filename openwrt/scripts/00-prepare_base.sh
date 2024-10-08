@@ -324,10 +324,10 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 git clone https://$gitea/sbwml/luci-app-dockerman -b openwrt-23.05 feeds/luci/applications/luci-app-dockerman
 if [ "$version" = "snapshots-24.10" ] || [ "$version" = "rc2" ]; then
     rm -rf feeds/packages/utils/{docker,dockerd,containerd,runc}
-    git clone https://$github/sbwml/packages_utils_docker feeds/packages/utils/docker
-    git clone https://$github/sbwml/packages_utils_dockerd feeds/packages/utils/dockerd
-    git clone https://$github/sbwml/packages_utils_containerd feeds/packages/utils/containerd
-    git clone https://$github/sbwml/packages_utils_runc feeds/packages/utils/runc
+    git clone https://$github/pmkol/packages_utils_docker feeds/packages/utils/docker
+    git clone https://$github/pmkol/packages_utils_dockerd feeds/packages/utils/dockerd
+    git clone https://$github/pmkol/packages_utils_containerd feeds/packages/utils/containerd
+    git clone https://$github/pmkol/packages_utils_runc feeds/packages/utils/runc
     [ "$version" = "rc2" ] && {
         rm -rf feeds/packages/utils/docker-compose
         cp -a ../master/packages/utils/docker-compose feeds/packages/utils/docker-compose
