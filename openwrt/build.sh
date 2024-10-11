@@ -30,14 +30,14 @@ ip_info=`curl -sk https://ip.cooluc.com`;
 
 # script url
 if [ "$isCN" = "CN" ]; then
-    export mirror=init.cooluc.com
+    export mirror=raw.githubusercontent.com/pmkol/openwrt-plus/x86_64
 else
-    export mirror=init2.cooluc.com
+    export mirror=raw.githubusercontent.com/pmkol/openwrt-plus/x86_64
 fi
 
 # github actions - automatically retrieve `github raw` links
 if [ "$(whoami)" = "runner" ] && [ -n "$GITHUB_REPO" ]; then
-    export mirror=raw.githubusercontent.com/$GITHUB_REPO/master
+    export mirror=raw.githubusercontent.com/$GITHUB_REPO/x86_64
 fi
 
 # private gitea
@@ -310,7 +310,7 @@ else
 fi
 
 # config-firmware
-[ "$NO_KMOD" != "y" ] && [ "$platform" != "rk3399" ] && curl -s https://$mirror/openwrt/generic/config-firmware >> .config
+[ "$NO_KMOD" != "y" ] && [ "$platform" != "rk3399" ] &&  [ "$platform" != "x86_64" ] && curl -s https://$mirror/openwrt/generic/config-firmware >> .config
 
 # ota
 [ "$ENABLE_OTA" = "y" ] && [ "$version" = "rc2" ] && echo 'CONFIG_PACKAGE_luci-app-ota=y' >> .config
