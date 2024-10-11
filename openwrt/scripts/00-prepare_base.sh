@@ -51,6 +51,9 @@ curl -s https://$mirror/openwrt/patch/$generic/0010-include-kernel-add-miss-conf
 # meson: add platform variable to cross-compilation file
 curl -s https://$mirror/openwrt/patch/$generic/0011-meson-add-platform-variable-to-cross-compilation-fil.patch | patch -p1
 
+# kernel 6.12: add legacy cgroup v1 memory controller
+[ "$TESTING_KERNEL" = "y" ] && curl -s https://$mirror/openwrt/patch/$generic/0012-kernel-add-legacy-cgroup-v1-memory-controller.patch | patch -p1
+
 # mold
 if [ "$ENABLE_MOLD" = "y" ] && [ "$version" = "rc2" ]; then
     curl -s https://$mirror/openwrt/patch/generic/mold/0001-build-add-support-to-use-the-mold-linker-for-package.patch | patch -p1
@@ -292,14 +295,8 @@ pushd package/libs/openssl/patches
     curl -sO https://$mirror/openwrt/patch/openssl/quic/0044-QUIC-Update-metadata-version.patch
 popd
 
-# openssl hwrng
-if [ "$platform" = "rk3399" ] || [ "$platform" = "rk3568" ]; then
-    sed -i "/-openwrt/iOPENSSL_OPTIONS += enable-ktls '-DDEVRANDOM=\"\\\\\"/dev/hwrng\\\\\"\"\'\n" package/libs/openssl/Makefile
-else
-    sed -i "/-openwrt/iOPENSSL_OPTIONS += enable-ktls '-DDEVRANDOM=\"\\\\\"/dev/urandom\\\\\"\"\'\n" package/libs/openssl/Makefile
-fi
-# openssl -Ofast
-sed -i "s/-O3/-Ofast/g" package/libs/openssl/Makefile
+# openssl urandom
+sed -i "/-openwrt/iOPENSSL_OPTIONS += enable-ktls '-DDEVRANDOM=\"\\\\\"/dev/urandom\\\\\"\"\'\n" package/libs/openssl/Makefile
 
 # openssl - lto
 if [ "$ENABLE_LTO" = "y" ]; then
