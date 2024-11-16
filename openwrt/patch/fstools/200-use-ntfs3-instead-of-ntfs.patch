@@ -1,5 +1,3 @@
-diff --git a/block.c b/block.c
-index f094216..ec05fb6 100644
 --- a/block.c
 +++ b/block.c
 @@ -721,7 +721,7 @@ static void check_filesystem(struct probe_info *pr)
@@ -32,8 +30,6 @@ index f094216..ec05fb6 100644
  			return -1;
  		}
  
-diff --git a/libblkid-tiny/ntfs.c b/libblkid-tiny/ntfs.c
-index 2426e70..bba6271 100644
 --- a/libblkid-tiny/ntfs.c
 +++ b/libblkid-tiny/ntfs.c
 @@ -214,7 +214,7 @@ static int probe_ntfs(blkid_probe pr, const struct blkid_idmag *mag)

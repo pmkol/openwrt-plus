@@ -1,24 +1,3 @@
-From: Qi Liu <liuqi_colin@msn.com>
-
-In order to support extroot, block extroot command has to be able to
-discover and properly mount the rootfs_data volume in order to discover
-the extroot volume. Currently this process can only discover MTD devices.
-This patch leverages libfstools in a similar way as mount_root to
-discover, initialize, and mount rootfs_data volume. It would enable any
-device with non-MTD rootfs_data volume to support extroot, including x86.
-
-Signed-off-by: Qi Liu <liuqi_colin@msn.com>
----
- CMakeLists.txt          |  4 ++--
- block.c                 | 40 ++++++++++++++++++++++++++++++++++++++++
- libfstools/fstype.h     | 12 ++++++++++++
- libfstools/libfstools.h | 11 +----------
- 4 files changed, 55 insertions(+), 12 deletions(-)
- create mode 100644 libfstools/fstype.h
-
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a586577..4b6e3e7 100644
-
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -75,9 +75,9 @@ INSTALL(TARGETS blockd RUNTIME DESTINATION sbin)
@@ -33,8 +12,6 @@ index a586577..4b6e3e7 100644
  ENDIF(DEFINED CMAKE_UBIFS_EXTROOT)
  INSTALL(TARGETS block RUNTIME DESTINATION sbin)
  
-diff --git a/block.c b/block.c
-index 569bf56..66cce46 100644
 --- a/block.c
 +++ b/block.c
 @@ -45,6 +45,8 @@
@@ -91,9 +68,6 @@ index 569bf56..66cce46 100644
  	/* As a last resort look for /etc/config/fstab on "rootfs" partition */
  	return mount_extroot(NULL);
  }
-diff --git a/libfstools/fstype.h b/libfstools/fstype.h
-new file mode 100644
-index 0000000..8882343
 --- /dev/null
 +++ b/libfstools/fstype.h
 @@ -0,0 +1,13 @@

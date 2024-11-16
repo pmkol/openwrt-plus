@@ -3,14 +3,16 @@
 # Rockchip - rkbin & u-boot
 rm -rf package/boot/uboot-rockchip package/boot/arm-trusted-firmware-rockchip
 if [ "$platform" = "rk3568" ]; then
-    git clone https://$github/sbwml/package_boot_uboot-rockchip package/boot/uboot-rockchip
+    git clone https://$github/pmkol/package_boot_uboot-rockchip package/boot/uboot-rockchip -b v2024.04
     git clone https://$github/sbwml/arm-trusted-firmware-rockchip package/boot/arm-trusted-firmware-rockchip
 else
-    git clone https://$github/sbwml/package_boot_uboot-rockchip package/boot/uboot-rockchip -b v2023.04
+    git clone https://$github/pmkol/package_boot_uboot-rockchip package/boot/uboot-rockchip -b v2023.04
     git clone https://$github/sbwml/arm-trusted-firmware-rockchip package/boot/arm-trusted-firmware-rockchip -b 0419
 fi
 
 ######## OpenWrt Patches ########
+
+sed -i '/mirror2.openwrt.org/a\push @mirrors, '\''https://source.cooluc.com'\'';' scripts/download.pl
 
 # tools: add llvm/clang toolchain
 curl -s https://$mirror/openwrt/patch/generic/0001-tools-add-llvm-clang-toolchain.patch | patch -p1
@@ -48,6 +50,9 @@ curl -s https://$mirror/openwrt/patch/generic/0010-include-kernel-add-miss-confi
 # meson: add platform variable to cross-compilation file
 curl -s https://$mirror/openwrt/patch/generic/0011-meson-add-platform-variable-to-cross-compilation-fil.patch | patch -p1
 
+# kernel: enable Multi-Path TCP
+curl -s https://$mirror/openwrt/patch/generic/0012-kernel-enable-Multi-Path-TCP-for-SMALL_FLASH-targets.patch | patch -p1
+
 # mold
 if [ "$ENABLE_MOLD" = "y" ]; then
     curl -s https://$mirror/openwrt/patch/generic/mold/0001-build-add-support-to-use-the-mold-linker-for-package.patch | patch -p1
@@ -57,7 +62,7 @@ if [ "$ENABLE_MOLD" = "y" ]; then
     curl -s https://$mirror/openwrt/patch/generic/mold/0005-build-replace-SSTRIP_ARGS-with-SSTRIP_DISCARD_TRAILI.patch | patch -p1
     curl -s https://$mirror/openwrt/patch/generic/mold/0006-config-add-a-knob-to-use-the-mold-linker-for-package.patch | patch -p1
     curl -s https://$mirror/openwrt/patch/generic/mold/0007-rules-prepare-to-use-different-linkers.patch | patch -p1
-    curl -s https://$mirror/openwrt/patch/generic/mold/0008-tools-mold-update-to-2.34.0.patch | patch -p1
+    curl -s https://$mirror/openwrt/patch/generic/mold/0008-tools-mold-update-to-2.34.1.patch | patch -p1
     # no-mold
     sed -i '/PKG_BUILD_PARALLEL/aPKG_BUILD_FLAGS:=no-mold' feeds/packages/utils/attr/Makefile
 fi
@@ -141,25 +146,28 @@ if [ ! "$platform" = "x86_64" ]; then
     curl -s https://$mirror/openwrt/patch/mbedtls-23.05/mbedtls.patch | patch -p1
 fi
 
-# NTFS3
-mkdir -p package/system/fstools/patches
-curl -s https://$mirror/openwrt/patch/fstools/ntfs3.patch > package/system/fstools/patches/ntfs3.patch
-curl -s https://$mirror/openwrt/patch/util-linux/util-linux_ntfs3.patch > package/utils/util-linux/patches/util-linux_ntfs3.patch
+# util-linux - ntfs3
+UTIL_VERSION=2.39.4
+UTIL_HASH=6c4f8723dafd41c39d93ecbf16509fc88c33cd5bd3277880ae5a1d97a014fd0e
+sed -ri "s/(PKG_VERSION:=)[^\"]*/\1$UTIL_VERSION/;s/(PKG_HASH:=)[^\"]*/\1$UTIL_HASH/" package/utils/util-linux/Makefile
+rm -rf package/utils/util-linux/patches/*
+curl -s https://$mirror/openwrt/patch/util-linux/001-meson-properly-handle-gettext-non-existence.patch > package/utils/util-linux/patches/001-meson-properly-handle-gettext-non-existence.patch
+curl -s https://$mirror/openwrt/patch/util-linux/002-util-linux_ntfs3.patch > package/utils/util-linux/patches/002-util-linux_ntfs3.patch
 
 # fstools - enable any device with non-MTD rootfs_data volume
 sed -i 's|$(PROJECT_GIT)/project|https://github.com/openwrt|g' package/system/fstools/Makefile
 curl -s https://$mirror/openwrt/patch/fstools/block-mount-add-fstools-depends.patch | patch -p1
+mkdir -p package/system/fstools/patches
+curl -s https://$mirror/openwrt/patch/fstools/200-use-ntfs3-instead-of-ntfs.patch > package/system/fstools/patches/200-use-ntfs3-instead-of-ntfs.patch
+curl -s https://$mirror/openwrt/patch/fstools/201-fstools-set-ntfs3-utf8.patch > package/system/fstools/patches/201-fstools-set-ntfs3-utf8.patch
+curl -s https://$mirror/openwrt/patch/fstools/022-fstools-support-extroot-for-non-MTD-rootfs_data.patch > package/system/fstools/patches/022-fstools-support-extroot-for-non-MTD-rootfs_data.patch
 if [ "$ENABLE_GLIBC" = "y" ]; then
     curl -s https://$mirror/openwrt/patch/fstools/fstools-set-ntfs3-utf8-new.patch > package/system/fstools/patches/ntfs3-utf8.patch
     curl -s https://$mirror/openwrt/patch/fstools/glibc/0001-libblkid-tiny-add-support-for-XFS-superblock.patch > package/system/fstools/patches/0001-libblkid-tiny-add-support-for-XFS-superblock.patch
     curl -s https://$mirror/openwrt/patch/fstools/glibc/0003-block-add-xfsck-support.patch > package/system/fstools/patches/0003-block-add-xfsck-support.patch
-else
-    curl -s https://$mirror/openwrt/patch/fstools/fstools-set-ntfs3-utf8-new.patch > package/system/fstools/patches/ntfs3-utf8.patch
 fi
 if [ "$ENABLE_GLIBC" = "y" ]; then
     curl -s https://$mirror/openwrt/patch/fstools/22-fstools-support-extroot-for-non-MTD-rootfs_data-new-version.patch > package/system/fstools/patches/22-fstools-support-extroot-for-non-MTD-rootfs_data.patch
-else
-    curl -s https://$mirror/openwrt/patch/fstools/22-fstools-support-extroot-for-non-MTD-rootfs_data.patch > package/system/fstools/patches/22-fstools-support-extroot-for-non-MTD-rootfs_data.patch
 fi
 
 # Shortcut Forwarding Engine
@@ -185,22 +193,21 @@ if [ "$version" = "snapshots-23.05" ] || [ "$version" = "rc2" ]; then
     # add custom nft command support
     curl -s https://$mirror/openwrt/patch/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch | patch -p1
     # libnftnl
-    rm -rf package/libs/libnftnl
-    cp -a ../master/openwrt/package/libs/libnftnl package/libs/libnftnl
+    #rm -rf package/libs/libnftnl
+    #cp -a ../master/openwrt/package/libs/libnftnl package/libs/libnftnl
     mkdir -p package/libs/libnftnl/patches
     curl -s https://$mirror/openwrt/patch/firewall4/libnftnl/001-libnftnl-add-fullcone-expression-support.patch > package/libs/libnftnl/patches/001-libnftnl-add-fullcone-expression-support.patch
     curl -s https://$mirror/openwrt/patch/firewall4/libnftnl/002-libnftnl-add-brcm-fullcone-support.patch > package/libs/libnftnl/patches/002-libnftnl-add-brcm-fullcone-support.patch
     sed -i '/PKG_INSTALL:=1/iPKG_FIXUP:=autoreconf' package/libs/libnftnl/Makefile
     # nftables
-    rm -rf package/network/utils/nftables
-    cp -a ../master/openwrt/package/network/utils/nftables package/network/utils/nftables
+    #rm -rf package/network/utils/nftables
+    #cp -a ../master/openwrt/package/network/utils/nftables package/network/utils/nftables
+    NFTABLES_VERSION=1.0.9
+    NFTABLES_HASH=a3c304cd9ba061239ee0474f9afb938a9bb99d89b960246f66f0c3a0a85e14cd
+    sed -ri "s/(PKG_VERSION:=)[^\"]*/\1$NFTABLES_VERSION/;s/(PKG_HASH:=)[^\"]*/\1$NFTABLES_HASH/" package/network/utils/nftables/Makefile
     mkdir -p package/network/utils/nftables/patches
     curl -s https://$mirror/openwrt/patch/firewall4/nftables/002-nftables-add-fullcone-expression-support.patch > package/network/utils/nftables/patches/002-nftables-add-fullcone-expression-support.patch
     curl -s https://$mirror/openwrt/patch/firewall4/nftables/003-nftables-add-brcm-fullconenat-support.patch > package/network/utils/nftables/patches/003-nftables-add-brcm-fullconenat-support.patch
-    # hide nftables warning message
-    pushd feeds/luci
-        curl -s https://$mirror/openwrt/patch/luci/luci-nftables.patch | patch -p1
-    popd
 fi
 
 # FullCone module
@@ -214,12 +221,13 @@ git clone https://$github/sbwml/package_new_natflow package/new/natflow
 
 # Patch Luci add nft_fullcone/bcm_fullcone & shortcut-fe & natflow & ipv6-nat & custom nft command option
 pushd feeds/luci
-    curl -s https://$mirror/openwrt/patch/firewall4/0001-luci-app-firewall-add-nft-fullcone-and-bcm-fullcone-.patch | patch -p1
+    curl -s https://$mirror/openwrt/patch/firewall4/0001-luci-app-firewall-add-nft-fullcone-and-bcm-fullcone.patch | patch -p1
     curl -s https://$mirror/openwrt/patch/firewall4/0002-luci-app-firewall-add-shortcut-fe-option.patch | patch -p1
     curl -s https://$mirror/openwrt/patch/firewall4/0003-luci-app-firewall-add-ipv6-nat-option.patch | patch -p1
     curl -s https://$mirror/openwrt/patch/firewall4/0004-luci-add-firewall-add-custom-nft-rule-support.patch | patch -p1
     curl -s https://$mirror/openwrt/patch/firewall4/0005-luci-app-firewall-add-natflow-offload-support.patch | patch -p1
 popd
+sed -i '/Requires hardware NAT support./{N;N;s/1/2/}' feeds/luci/applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js
 
 # openssl - quictls
 if [ "$version" = "rc2" ]; then
@@ -273,14 +281,8 @@ pushd package/libs/openssl/patches
     curl -sO https://$mirror/openwrt/patch/openssl/quic/0044-QUIC-Update-metadata-version.patch
 popd
 
-# openssl hwrng
-if [ "$platform" = "rk3399" ] || [ "$platform" = "rk3568" ]; then
-    sed -i "/-openwrt/iOPENSSL_OPTIONS += enable-ktls '-DDEVRANDOM=\"\\\\\"/dev/hwrng\\\\\"\"\'\n" package/libs/openssl/Makefile
-else
-    sed -i "/-openwrt/iOPENSSL_OPTIONS += enable-ktls '-DDEVRANDOM=\"\\\\\"/dev/urandom\\\\\"\"\'\n" package/libs/openssl/Makefile
-fi
-# openssl -Ofast
-sed -i "s/-O3/-Ofast/g" package/libs/openssl/Makefile
+# openssl urandom
+sed -i "/-openwrt/iOPENSSL_OPTIONS += enable-ktls '-DDEVRANDOM=\"\\\\\"/dev/urandom\\\\\"\"\'\n" package/libs/openssl/Makefile
 
 # openssl - lto
 if [ "$ENABLE_LTO" = "y" ]; then
@@ -340,18 +342,9 @@ sed -i 's/procd_set_param stdout 1/procd_set_param stdout 0/g' feeds/packages/ut
 sed -i 's/procd_set_param stderr 1/procd_set_param stderr 0/g' feeds/packages/utils/ttyd/files/ttyd.init
 
 # UPnP
-rm -rf feeds/packages/net/miniupnpd
-git clone https://$gitea/sbwml/miniupnpd feeds/packages/net/miniupnpd -b v2.3.6
-rm -rf feeds/luci/applications/luci-app-upnp
-git clone https://$gitea/sbwml/luci-app-upnp feeds/luci/applications/luci-app-upnp
-pushd feeds/packages
-    curl -s https://$mirror/openwrt/patch/miniupnpd/01-set-presentation_url.patch | patch -p1
-    curl -s https://$mirror/openwrt/patch/miniupnpd/02-force_forwarding.patch | patch -p1
-    curl -s https://$mirror/openwrt/patch/miniupnpd/04-enable-force_forwarding-by-default.patch | patch -p1
-popd
-
-# UPnP - Move to network
-sed -i 's/services/network/g' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
+rm -rf feeds/{packages/net/miniupnpd,luci/applications/luci-app-upnp}
+git clone https://$github/pmkol/packages_net_miniupnpd feeds/packages/net/miniupnpd -b main
+git clone https://$github/pmkol/luci-app-upnp feeds/luci/applications/luci-app-upnp -b main
 
 # nginx-util - fix gcc13
 pushd feeds/packages
@@ -408,6 +401,7 @@ pushd feeds/luci
     curl -s https://$mirror/openwrt/patch/luci/0003-luci-mod-status-storage-index-applicable-only-to-val.patch | patch -p1
     curl -s https://$mirror/openwrt/patch/luci/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch | patch -p1
     curl -s https://$mirror/openwrt/patch/luci/0005-luci-mod-system-add-refresh-interval-setting.patch | patch -p1
+    curl -s https://$mirror/openwrt/patch/luci/0006-luci-mod-system-mounts-add-docker-directory-mount-po.patch | patch -p1
 popd
 
 # Luci diagnostics.js

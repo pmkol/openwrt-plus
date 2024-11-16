@@ -3,9 +3,16 @@
 # Fix build for linux-6.6
 
 # cryptodev-linux
+CRYPTODEV_VERSION=1.13
+CRYPTODEV_HASH=33b7915c46eb39a37110e88c681423c0dd0df25d784b6e1475ac3196367f0db5
+sed -ri "s/(PKG_VERSION:=)[^\"]*/\1$CRYPTODEV_VERSION/;s/(PKG_HASH:=)[^\"]*/\1$CRYPTODEV_HASH/" package/kernel/cryptodev-linux/Makefile
 mkdir -p package/kernel/cryptodev-linux/patches
-curl -s https://$mirror/openwrt/patch/packages-patches/cryptodev-linux/001-Fix-build-for-Linux-6.3-rc1.patch > package/kernel/cryptodev-linux/patches/001-Fix-build-for-Linux-6.3-rc1.patch
-curl -s https://$mirror/openwrt/patch/packages-patches/cryptodev-linux/002-fix-build-for-linux-6.7-rc1.patch > package/kernel/cryptodev-linux/patches/002-fix-build-for-linux-6.7-rc1.patch
+curl -s https://$mirror/openwrt/patch/packages-patches/cryptodev-linux/0001-cryptodev_verbosity-fix-build-for-linux-6.4.patch > package/kernel/cryptodev-linux/patches/0001-cryptodev_verbosity-fix-build-for-linux-6.4.patch
+curl -s https://$mirror/openwrt/patch/packages-patches/cryptodev-linux/0002-zero-copy-fix-build-for-linux-6.4.patch > package/kernel/cryptodev-linux/patches/0002-zero-copy-fix-build-for-linux-6.4.patch
+curl -s https://$mirror/openwrt/patch/packages-patches/cryptodev-linux/0003-move-recent-linux-version-ifdefs-from-v6.4-to-v6.5.patch > package/kernel/cryptodev-linux/patches/0003-move-recent-linux-version-ifdefs-from-v6.4-to-v6.5.patch
+curl -s https://$mirror/openwrt/patch/packages-patches/cryptodev-linux/0004-fix-build-for-linux-6.7-rc1.patch > package/kernel/cryptodev-linux/patches/0004-fix-build-for-linux-6.7-rc1.patch
+curl -s https://$mirror/openwrt/patch/packages-patches/cryptodev-linux/0005-Fix-cryptodev_verbosity-sysctl-for-Linux-6.11-rc1.patch > package/kernel/cryptodev-linux/patches/0005-Fix-cryptodev_verbosity-sysctl-for-Linux-6.11-rc1.patch
+curl -s https://$mirror/openwrt/patch/packages-patches/cryptodev-linux/0006-Exclude-unused-struct-since-Linux-6.5.patch > package/kernel/cryptodev-linux/patches/0006-Exclude-unused-struct-since-Linux-6.5.patch
 
 # gpio-button-hotplug
 curl -s https://$mirror/openwrt/patch/packages-patches/gpio-button-hotplug/fix-linux-6.6.patch | patch -p1

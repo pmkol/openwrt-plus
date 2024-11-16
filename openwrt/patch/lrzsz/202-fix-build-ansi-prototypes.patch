@@ -1,0 +1,11 @@
+--- a/configure.in
++++ b/configure.in
+@@ -103,7 +103,7 @@ AC_PROG_RANLIB
+ AC_ISC_POSIX
+ AC_AIX
+ AC_MINIX
+-AM_C_PROTOTYPES
++dnl AM_C_PROTOTYPES
+ AC_C_CONST
+ AC_C_INLINE
+ 

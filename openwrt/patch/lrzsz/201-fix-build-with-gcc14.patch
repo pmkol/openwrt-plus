@@ -1,0 +1,112 @@
+--- a/configure
++++ b/configure
+@@ -1077,7 +1077,7 @@ ac_link='${CC-cc} -o conftest${ac_exeext} $CFLAGS $CPPFLAGS $LDFLAGS conftest.$a
+ cross_compiling=$ac_cv_prog_cc_cross
+ 
+ echo "$ac_t""$ac_cv_prog_cc_works" 1>&6
+-if test $ac_cv_prog_cc_works = no; then
++if test $ac_cv_prog_cc_works = null; then
+   { echo "configure: error: installation or configuration problem: C compiler cannot create executables." 1>&2; exit 1; }
+ fi
+ echo $ac_n "checking whether the C compiler ($CC $CFLAGS $LDFLAGS) is a cross-compiler""... $ac_c" 1>&6
+@@ -2607,7 +2607,9 @@ EOF
+ 
+ fi
+ 
+-
++if [ -z "$cross_compiling" ]; then
++	cross_compiling=no
++fi
+ if test $cross_compiling = no ; then
+ 	echo $ac_n "checking whether setvbuf arguments are reversed""... $ac_c" 1>&6
+ echo "configure:2614: checking whether setvbuf arguments are reversed" >&5
+--- a/lib/error.c
++++ b/lib/error.c
+@@ -36,6 +36,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
+ # define va_dcl char *a1, *a2, *a3, *a4, *a5, *a6, *a7, *a8;
+ #endif
+ 
++#if defined(__GNUC__) && __GNUC__ >= 14
++#include <string.h>
++#endif
++
+ #if STDC_HEADERS || _LIBC
+ # include <stdlib.h>
+ # include <string.h>
+--- a/src/canit.c
++++ b/src/canit.c
+@@ -30,6 +30,10 @@
+ #include <errno.h>
+ #include <getopt.h>
+ 
++#if defined(__GNUC__) && __GNUC__ >= 14
++#include <string.h>
++#endif
++
+ /* send cancel string to get the other end to shut up */
+ void
+ canit (int fd)
+--- a/src/lrz.c
++++ b/src/lrz.c
+@@ -41,6 +41,10 @@
+ #include "xstrtoul.h"
+ #include "error.h"
+ 
++#if defined(__GNUC__) && __GNUC__ >= 14
++#include <string.h>
++#endif
++
+ #ifndef STRICT_PROTOTYPES
+ extern time_t time();
+ extern char *strerror();
+--- a/src/lsz.c
++++ b/src/lsz.c
+@@ -50,6 +50,10 @@ void *mm_addr=NULL;
+ #include "xstrtoul.h"
+ #include "error.h"
+ 
++#if defined(__GNUC__) && __GNUC__ >= 14
++#include <string.h>
++#endif
++
+ #ifndef STRICT_PROTOTYPES
+ extern time_t time();
+ extern char *strerror();
+--- a/src/tcp.c
++++ b/src/tcp.c
+@@ -38,6 +38,10 @@
+ #include <stdlib.h>
+ #include "error.h"
+ 
++#if defined(__GNUC__) && __GNUC__ >= 14
++#include <string.h>
++#endif
++
+ static RETSIGTYPE
+ tcp_alarm_handler(int dummy)
+ {
+--- a/src/zperr.c
++++ b/src/zperr.c
+@@ -24,6 +24,10 @@
+ #include <stdlib.h>
+ #include <errno.h>
+ 
++#if defined(__GNUC__) && __GNUC__ >= 14
++#include <string.h>
++#endif
++
+ #ifdef __STDC__
+ #  define WAYTOGO
+ #  include <stdarg.h>
+--- a/src/zreadline.c
++++ b/src/zreadline.c
+@@ -33,6 +33,9 @@
+ 
+ #include "error.h"
+ 
++#if defined(__GNUC__) && __GNUC__ >= 14
++#include <string.h>
++#endif
+ 
+ /* Ward Christensen / CP/M parameters - Don't change these! */
+ #define TIMEOUT (-2)

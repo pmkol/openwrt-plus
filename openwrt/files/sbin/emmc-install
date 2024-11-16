@@ -6,7 +6,7 @@
 # check
 commands=("bash" "parted" "awk" "sed" "grep" "zcat" "dd" "fdisk")
 for cmd in "${commands[@]}"; do
-  if command -v "$cmd" >/dev/null 2>&1; then
+  if ! which "$cmd" >/dev/null 2>&1; then
     rm -rf /var/emmc-install
     mkdir -p /var/emmc-install/{bin,lib}
     cp $(which fdisk) /var/emmc-install/bin

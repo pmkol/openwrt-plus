@@ -6,7 +6,7 @@ git clone https://$github/sbwml/packages_lang_golang -b 23.x feeds/packages/lang
 
 # node - prebuilt
 rm -rf feeds/packages/lang/node
-git clone https://$github/sbwml/feeds_packages_lang_node-prebuilt feeds/packages/lang/node
+git clone https://$github/sbwml/feeds_packages_lang_node-prebuilt feeds/packages/lang/node -b packages-23.05
 
 # Default settings
 git clone https://$github/sbwml/default-settings package/new/default-settings
@@ -21,9 +21,10 @@ sed -i 's/stderr 1/stderr 0/g' feeds/packages/net/nlbwmon/files/nlbwmon.init
 rm -rf feeds/packages/libs/boost
 cp -a ../master/packages/libs/boost feeds/packages/libs/boost
 
-# lrzsz - 0.12.20
-rm -rf feeds/packages/utils/lrzsz
-git clone https://$github/sbwml/packages_utils_lrzsz package/new/lrzsz
+# lrzsz - 0.12.21
+curl -s https://$mirror/openwrt/patch/lrzsz/201-fix-build-with-gcc14.patch > feeds/packages/utils/lrzsz/patches/201-fix-build-with-gcc14.patch
+[ "$platform" = "x86_64" ] || [ "$platform" = "rk3399" ] && curl -s https://$mirror/openwrt/patch/lrzsz/202-fix-build-ansi-prototypes.patch > feeds/packages/utils/lrzsz/patches/202-fix-build-ansi-prototypes.patch
+mv feeds/packages/utils/lrzsz package/new/lrzsz
 
 # irqbalance - openwrt master
 rm -rf feeds/packages/utils/irqbalance
@@ -119,7 +120,7 @@ sed -i 's/解除网易云音乐播放限制/网易云音乐解锁/g' package/new
 git clone https://$github/sbwml/luci-app-xunlei package/new/xunlei
 
 # Theme
-git clone --depth 1 https://$github/sbwml/luci-theme-argon.git package/new/luci-theme-argon
+git clone --depth 1 https://$github/pmkol/luci-theme-argon package/new/luci-theme-argon
 
 # Mosdns
 git clone https://$github/sbwml/luci-app-mosdns -b v5 package/new/mosdns

@@ -4,7 +4,7 @@
 
 # Rockchip - target - r4s/r5s only
 rm -rf target/linux/rockchip
-git clone https://nanopi:nanopi@$gitea/sbwml/target_linux_rockchip-6.x target/linux/rockchip -b linux-6.6
+git clone https://$GITHUB_TOKEN@$github/pmkol/target_linux_rockchip target/linux/rockchip -b linux-6.11
 
 # x86_64 - target 6.6
 curl -s https://$mirror/openwrt/patch/openwrt-6.x/x86/64/config-6.6 > target/linux/x86/64/config-6.6
@@ -44,18 +44,7 @@ grep HASH include/kernel-$kernel_version | awk -F'HASH-' '{print $2}' | awk '{pr
 
 # kernel generic patches
 rm -rf target/linux/generic
-local_kernel_version=$(sed -n 's/^LINUX_KERNEL_HASH-\([0-9.]\+\) = .*/\1/p' include/kernel-$kernel_version)
-release_kernel_version=$(curl -sL https://raw.githubusercontent.com/sbwml/r4s_build_script/master/tags/kernel-$kernel_version | sed -n 's/^LINUX_KERNEL_HASH-\([0-9.]\+\) = .*/\1/p')
-if [ "$local_kernel_version" = "$release_kernel_version" ] && [ -z "$git_password" ]; then
-    git clone https://$github/sbwml/target_linux_generic -b main target/linux/generic --depth=1
-else
-    if [ "$(whoami)" = "runner" ]; then
-        git_name=private
-        git clone https://"$git_name":"$git_password"@$gitea/sbwml/target_linux_generic -b main target/linux/generic --depth=1
-    elif [ "$(whoami)" = "sbwml" ]; then
-        git clone https://$gitea/sbwml/target_linux_generic -b main target/linux/generic --depth=1
-    fi
-fi
+git clone https://$github/pmkol/target_linux_generic -b 6.11.6 target/linux/generic --depth=1
 
 # bcm53xx - fix build kernel with clang
 [ "$platform" = "bcm53xx" ] && [ "$KERNEL_CLANG_LTO" = "y" ] && rm -f target/linux/generic/hack-6.6/220-arm-gc_sections.patch target/linux/generic/hack-6.11/220-arm-gc_sections.patch
@@ -163,7 +152,7 @@ else
     git clone https://$github/sbwml/package_kernel_rtl8812au-ac package/kernel/rtl8812au-ac
 fi
 
-# mt76 - 2024-09-29
+# mt76 - 2024-10-11
 rm -rf package/kernel/mt76
 mkdir -p package/kernel/mt76/patches
 curl -s https://$mirror/openwrt/patch/mt76/Makefile > package/kernel/mt76/Makefile
@@ -183,8 +172,8 @@ curl -s https://$mirror/openwrt/patch/openwrt-6.x/500-world-regd-5GHz.patch > pa
 
 # mac80211 - fix linux 6.6 & add rtw89
 rm -rf package/kernel/mac80211
-git clone https://$github/sbwml/package_kernel_mac80211 package/kernel/mac80211 -b v6.11
-[ "$TESTING_KERNEL" = "y" ] && rm -f package/kernel/mac80211/patches/build/140-trace_backport.patch
+git clone https://$github/pmkol/package_kernel_mac80211 package/kernel/mac80211
+#[ "$TESTING_KERNEL" = "y" ] && rm -f package/kernel/mac80211/patches/build/140-trace_backport.patch
 
 # ath10k-ct
 rm -rf package/kernel/ath10k-ct

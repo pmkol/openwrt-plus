@@ -8,9 +8,9 @@ PKG_LICENSE_FILES:=
 
 PKG_SOURCE_URL:=https://github.com/openwrt/mt76
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2024-09-29
-PKG_SOURCE_VERSION:=680bc70f161fde0f167e2ae50c771be4775eb50a
-PKG_MIRROR_HASH:=dff0656a68f05779f9563baee8abb55faeeda79dbc24b99c1f4904af5a69821a
+PKG_SOURCE_DATE:=2024-10-11
+PKG_SOURCE_VERSION:=ecca0e77b4bce629ec1f79d83bbd14a68f919188
+PKG_MIRROR_HASH:=a8852a446d4fbd7e022c669a3c574c8ba0cc1dcdc987c9d7d5a148113a71d842
 
 PKG_MAINTAINER:=Felix Fietkau <nbd@nbd.name>
 PKG_USE_NINJA:=0
@@ -318,7 +318,8 @@ endef
 define KernelPackage/mt7996e
   $(KernelPackage/mt76-default)
   TITLE:=MediaTek MT7996E wireless driver
-  DEPENDS+=@PCI_SUPPORT +kmod-mt76-connac +kmod-hwmon-core +@DRIVER_11AX_SUPPORT +@KERNEL_RELAY
+  DEPENDS+=@PCI_SUPPORT +kmod-mt76-connac +kmod-hwmon-core +@DRIVER_11AX_SUPPORT \
+  	   +@KERNEL_RELAY +@DRIVER_11BE_SUPPORT
   FILES:= $(PKG_BUILD_DIR)/mt7996/mt7996e.ko
   AUTOLOAD:=$(call AutoProbe,mt7996e)
 endef
@@ -363,7 +364,7 @@ define KernelPackage/mt7925-common
   $(KernelPackage/mt76-default)
   TITLE:=MediaTek MT7925 wireless driver common code
   HIDDEN:=1
-  DEPENDS+=+kmod-mt792x-common +@DRIVER_11AX_SUPPORT +kmod-hwmon-core
+  DEPENDS+=+kmod-mt792x-common +@DRIVER_11AX_SUPPORT +kmod-hwmon-core +@DRIVER_11BE_SUPPORT
   FILES:= $(PKG_BUILD_DIR)/mt7925/mt7925-common.ko
 endef
 
@@ -659,6 +660,8 @@ define KernelPackage/mt7992-firmware/install
 	cp \
 		$(PKG_BUILD_DIR)/firmware/mt7996/mt7992_dsp.bin \
 		$(PKG_BUILD_DIR)/firmware/mt7996/mt7992_eeprom.bin \
+		$(PKG_BUILD_DIR)/firmware/mt7996/mt7992_eeprom_2i5i.bin \
+		$(PKG_BUILD_DIR)/firmware/mt7996/mt7992_eeprom_2i5e.bin \
 		$(PKG_BUILD_DIR)/firmware/mt7996/mt7992_rom_patch.bin \
 		$(PKG_BUILD_DIR)/firmware/mt7996/mt7992_wa.bin \
 		$(PKG_BUILD_DIR)/firmware/mt7996/mt7992_wm.bin \
@@ -670,7 +673,7 @@ define KernelPackage/mt7992-23-firmware/install
 	cp \
 		$(PKG_BUILD_DIR)/firmware/mt7996/mt7992_dsp_23.bin \
 		$(PKG_BUILD_DIR)/firmware/mt7996/mt7992_eeprom_23.bin \
-		$(PKG_BUILD_DIR)/firmware/mt7996/mt7992_eeprom_23.bin \
+		$(PKG_BUILD_DIR)/firmware/mt7996/mt7992_eeprom_23_2i5i.bin \
 		$(PKG_BUILD_DIR)/firmware/mt7996/mt7992_rom_patch_23.bin \
 		$(PKG_BUILD_DIR)/firmware/mt7996/mt7992_wa_23.bin \
 		$(PKG_BUILD_DIR)/firmware/mt7996/mt7992_wm_23.bin \

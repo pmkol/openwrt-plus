@@ -1,4 +1,4 @@
-name: Build sync kernel-6.11
+name: Build OpenWrt 23.05 Lite
 
 on:
   workflow_dispatch:
@@ -100,13 +100,13 @@ jobs:
       id: compile
       continue-on-error: true
       run: |
+        export GITHUB_TOKEN=${{ secrets.OPENWRT_WORKFLOW_TOKEN }}
         export GITHUB_REPO=${{ github.repository }}
-        export TESTING_KERNEL=y KERNEL_CLANG_LTO=y BUILD_FAST=y ENABLE_UHTTPD=y ENABLE_LTO=y ENABLE_LRNG=y ENABLE_BPF=y USE_GCC14=y ENABLE_MOLD=y
-        bash <(curl -sS https://raw.githubusercontent.com/${{ github.repository }}/master/openwrt/build.sh) ${{ matrix.tag.type }} ${{ matrix.model }}
+        export TESTING_KERNEL=y KERNEL_CLANG_LTO=y BUILD_FAST=y ENABLE_UHTTPD=y ENABLE_LTO=y ENABLE_LRNG=y ENABLE_BPF=y MINIMAL_BUILD=y USE_GCC14=y ENABLE_MOLD=y
+        bash <(curl -sS https://raw.githubusercontent.com/${{ github.repository }}/build/openwrt/build.sh) ${{ matrix.tag.type }} ${{ matrix.model }}
         cd openwrt
         tags=$(git describe --abbrev=0 --tags)
-        kernel=$(curl -s "https://raw.githubusercontent.com/${{ github.repository }}/master/tags/kernel-6.11" | awk -F"LINUX_KERNEL_HASH-| =" '/LINUX_KERNEL_HASH/{print $2}')
-        echo "latest_release=$tags-k$kernel" >>$GITHUB_ENV
+        echo "latest_release=$tags-lite" >>$GITHUB_ENV
 
     - name: Extensive logs after a failed compilation
       working-directory: /builder
@@ -156,8 +156,12 @@ jobs:
         name: OpenWrt-${{ env.latest_release }}
         allowUpdates: true
         tag: ${{ env.latest_release }}
-        body: OpenWrt 23.05 with Kernel 6.11 Enhanced
-        commit: master
+        body: |
+          OpenWrt 23.05 Lite with Kernel 6.11 Enhanced
+
+          Includes a lite selection of packages:
+          Mihomo, Sing-box, WireGuard, DDNS, SMB, UPnP.
+        commit: main
         replacesArtifacts: true
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: ${{ env.WORKDIR }}/rom/*

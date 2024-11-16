@@ -1,5 +1,3 @@
-diff --git a/block.c b/block.c
-index 3842ca7..2176f72 100644
 --- a/block.c
 +++ b/block.c
 @@ -945,8 +945,12 @@ static int handle_mount(const char *source, const char *target,

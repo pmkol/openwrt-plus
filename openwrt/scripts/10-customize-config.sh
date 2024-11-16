@@ -42,7 +42,7 @@ sed -i '/geoip_api/s#Loyalsoldier/v2ray-rules-dat#pmkol/geodata-lite#' package/n
 sed -i '/geosite_api/s#Loyalsoldier/v2ray-rules-dat#MetaCubeX/meta-rules-dat#' package/new/helloworld/luci-app-passwall/root/usr/share/passwall/rule_update.lua
 
 # add natflow by default
-sed -i 's|\[\ \$(grep\ -c\ shortcut_fe\ /etc/config/firewall)\ -eq\ '\''0'\''\ \]\ \&\&\ uci\ set\ firewall.@defaults\[0\].flow_offloading='\''1'\''|\[\ \$(grep\ -c\ shortcut_fe\ /etc/config/firewall)\ -eq\ '\''0'\''\ \]\ \&\&\ \[\ \$(grep\ -c\ natflow_delay_pkts\ /etc/config/firewall)\ -eq\ '\''0'\''\ \]\ \&\&\ uci\ set\ firewall.@defaults\[0\].flow_offloading='\''1'\''|g' package/new/default-settings/default/zzz-default-settings
+#sed -i 's|\[\ \$(grep\ -c\ shortcut_fe\ /etc/config/firewall)\ -eq\ '\''0'\''\ \]\ \&\&\ uci\ set\ firewall.@defaults\[0\].flow_offloading='\''1'\''|\[\ \$(grep\ -c\ shortcut_fe\ /etc/config/firewall)\ -eq\ '\''0'\''\ \]\ \&\&\ \[\ \$(grep\ -c\ natflow_delay_pkts\ /etc/config/firewall)\ -eq\ '\''0'\''\ \]\ \&\&\ uci\ set\ firewall.@defaults\[0\].flow_offloading='\''1'\''|g' package/new/default-settings/default/zzz-default-settings
 
 # configure default-settings
 sed -i 's/openwrt\/luci/pmkol\/openwrt-plus/g' package/new/luci-theme-argon/luci-theme-argon/luasrc/view/themes/argon/footer.htm
